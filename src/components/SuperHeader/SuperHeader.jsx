@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   gap: 24px;
   align-items: center;
   padding: 0 32px;
-  height: 40px;
+  height: 2.5rem;
 `;
 
 const MarketingMessage = styled.span`
