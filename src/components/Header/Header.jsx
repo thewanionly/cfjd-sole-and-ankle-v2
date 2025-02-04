@@ -50,6 +50,7 @@ const Nav = styled.nav`
 
 const NavLink = styled.a`
   font-size: 1.125rem;
+  line-height: 1.17;
   text-transform: uppercase;
   text-decoration: none;
   color: ${COLORS.gray[900]};
