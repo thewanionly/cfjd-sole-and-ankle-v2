@@ -34,6 +34,8 @@ const ShoeCard = ({ slug, name, imageSrc, price, salePrice, releaseDate, numOfCo
       <Wrapper>
         <ImageWrapper>
           <Image alt='' src={imageSrc} />
+          {variant === VARIANTS.ON_SALE && <SaleFlag>Sale</SaleFlag>}
+          {variant === VARIANTS.NEW_RELEASE && <NewFlag>Just Released!</NewFlag>}
         </ImageWrapper>
         <Spacer size={14} />
         <Row>
@@ -45,8 +47,6 @@ const ShoeCard = ({ slug, name, imageSrc, price, salePrice, releaseDate, numOfCo
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
           {variant === VARIANTS.ON_SALE && <SalePrice>{formatPrice(salePrice)}</SalePrice>}
         </Row>
-        {variant === VARIANTS.ON_SALE && <SaleFlag>Sale</SaleFlag>}
-        {variant === VARIANTS.NEW_RELEASE && <ReleaseFlag>Just Released!</ReleaseFlag>}
       </Wrapper>
     </Link>
   );
@@ -73,7 +73,7 @@ const SaleFlag = styled(Flag)`
   background-color: ${COLORS.primary};
 `;
 
-const ReleaseFlag = styled(Flag)`
+const NewFlag = styled(Flag)`
   background-color: ${COLORS.secondary};
 `;
 
