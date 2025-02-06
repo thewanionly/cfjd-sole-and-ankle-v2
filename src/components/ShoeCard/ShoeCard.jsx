@@ -5,6 +5,12 @@ import { COLORS, WEIGHTS } from '../../constants';
 import { formatPrice, pluralize, isNewShoe } from '../../utils';
 import Spacer from '../Spacer';
 
+const VARIANTS = {
+  DEFAULT: 'default',
+  ON_SALE: 'on-sale',
+  NEW_RELEASE: 'new-release'
+};
+
 const ShoeCard = ({ slug, name, imageSrc, price, salePrice, releaseDate, numOfColors }) => {
   // There are 3 variants possible, based on the props:
   //   - new-release
@@ -18,10 +24,10 @@ const ShoeCard = ({ slug, name, imageSrc, price, salePrice, releaseDate, numOfCo
   // will triumph and be the variant used.
   // prettier-ignore
   const variant = typeof salePrice === 'number'
-    ? 'on-sale'
+    ? VARIANTS.ON_SALE
     : isNewShoe(releaseDate)
-      ? 'new-release'
-      : 'default'
+      ? VARIANTS.NEW_RELEASE
+      : VARIANTS.DEFAULT
 
   return (
     <Link href={`/shoe/${slug}`}>
@@ -38,17 +44,46 @@ const ShoeCard = ({ slug, name, imageSrc, price, salePrice, releaseDate, numOfCo
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
         </Row>
+        {variant === VARIANTS.ON_SALE && <SaleFlag>Sale</SaleFlag>}
+        {variant === VARIANTS.NEW_RELEASE && <ReleaseFlag>Just Released!</ReleaseFlag>}
       </Wrapper>
     </Link>
   );
 };
+
+const Flag = styled.div`
+  height: 32px;
+  padding: 0 9px;
+  border-radius: 2px;
+
+  font-size: ${14 / 16}rem;
+  font-weight: 700;
+  color: ${COLORS.white};
+
+  display: flex;
+  align-items: center;
+
+  position: absolute;
+  top: 12px;
+  right: -4px;
+`;
+
+const SaleFlag = styled(Flag)`
+  background-color: ${COLORS.primary};
+`;
+
+const ReleaseFlag = styled(Flag)`
+  background-color: ${COLORS.secondary};
+`;
 
 const Link = styled.a`
   text-decoration: none;
   color: inherit;
 `;
 
-const Wrapper = styled.article``;
+const Wrapper = styled.article`
+  position: relative;
+`;
 
 const ImageWrapper = styled.div`
   position: relative;
