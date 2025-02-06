@@ -38,11 +38,12 @@ const ShoeCard = ({ slug, name, imageSrc, price, salePrice, releaseDate, numOfCo
         <Spacer size={14} />
         <Row>
           <Name>{name}</Name>
-          <Price>{formatPrice(price)}</Price>
+          <Price isOldPrice={variant === VARIANTS.ON_SALE}>{formatPrice(price)}</Price>
         </Row>
         <Spacer size={6} />
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          {variant === VARIANTS.ON_SALE && <SalePrice>{formatPrice(salePrice)}</SalePrice>}
         </Row>
         {variant === VARIANTS.ON_SALE && <SaleFlag>Sale</SaleFlag>}
         {variant === VARIANTS.NEW_RELEASE && <ReleaseFlag>Just Released!</ReleaseFlag>}
@@ -108,7 +109,10 @@ const Name = styled.h3`
   color: ${COLORS.gray[900]};
 `;
 
-const Price = styled.span``;
+const Price = styled.span`
+  color: ${({ isOldPrice }) => (isOldPrice ? COLORS.gray[700] : COLORS.gray[900])};
+  text-decoration: ${({ isOldPrice }) => isOldPrice && 'line-through'};
+`;
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};
